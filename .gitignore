@@ -1,9 +1,5 @@
-*.json
 *.jpg
 .vscode/
 .ipynb_checkpoints/
 .__pycache__/
-
-
-
-
+/COCO
