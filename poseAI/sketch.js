@@ -1,15 +1,3 @@
-// ml5.js: Pose Classification
-// The Coding Train / Daniel Shiffman
-// https://thecodingtrain.com/Courses/ml5-beginners-guide/7.2-pose-classification.html
-// https://youtu.be/FYgYyq-xqAw
-
-// All code: https://editor.p5js.org/codingtrain/sketches/JoZl-QRPK
-
-// Separated into three sketches
-// 1: Data Collection: https://editor.p5js.org/codingtrain/sketches/kTM0Gm-1q
-// 2: Model Training: https://editor.p5js.org/codingtrain/sketches/-Ywq20rM9
-// 3: Model Deployment: https://editor.p5js.org/codingtrain/sketches/c5sDNr8eM
-
 let video;
 let poseNet;
 let pose;
@@ -46,18 +34,23 @@ function setup() {
     outputs: 4,
     task: 'classification',
     debug: true,
-	hiddenUnits: 16,
-	layers:[ //Default Settings
-	  {
-		type: 'dense',
-		units: 16, //Equals hiddenUnits
-		activation: 'relu',
-	  },
-	  {
-		type: 'dense',
-		activation: 'softmax',
-	  },
-	]}
+    layers:[
+      {
+        type: 'dense',
+        units: 64,
+        activation: 'relu',
+      },
+      {
+        type: 'dense',
+        units: 16,
+        activation: 'relu',
+      },
+      {
+        type: 'dense',
+        activation: 'softmax',
+      },
+    ] 
+  }
   brain = ml5.neuralNetwork(options);
   
    //LOAD PRETRAINED MODEL
@@ -100,13 +93,17 @@ function gotResult(error, results) {
   } else {
 	poseLabel = '';
   }
+  else{
+    poseLabel = ""
+  }
   classifyPose();
 }
 
 function dataReady() {
   brain.normalizeData();
   brain.train({
-    epochs: 100
+    epochs: 50,
+    batchsize: 24
   }, finished);
 }
 
@@ -166,7 +163,7 @@ function draw() {
 
   fill(255, 0, 255);
   noStroke();
-  textSize(75);
+  textSize(50);
   textAlign(CENTER, CENTER);
   text(poseLabel, width / 2, height / 2);
 }
