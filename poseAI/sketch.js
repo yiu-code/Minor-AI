@@ -21,6 +21,19 @@ let poseLabel = "";
 let state = 'waiting';
 let targetLabel;
 
+let startLogging = false;
+
+function keyPressed() {
+  if (key == 't') {
+	  setTimeout(function() {
+		startLogging = true;
+		setTimeout(function() {
+			startLogging = false}, 
+			3000)
+	  }, 5000)
+  }
+}
+
 function setup() {
   createCanvas(640, 480);
   video = createCapture(VIDEO);
@@ -33,33 +46,28 @@ function setup() {
     outputs: 4,
     task: 'classification',
     debug: true,
-	layers: [
-	{
-      type: 'dense',
-      units: 16,
-      activation: 'relu'
-    },
-    {
-      type: 'dense',
-      units: 16,
-      activation: 'sigmoid'
-    },
-    {
-      type: 'dense',
-      activation: 'sigmoid'
-    }],
-	learningRate: 0.2,
-  }
+	hiddenUnits: 16,
+	layers:[ //Default Settings
+	  {
+		type: 'dense',
+		units: 16, //Equals hiddenUnits
+		activation: 'relu',
+	  },
+	  {
+		type: 'dense',
+		activation: 'softmax',
+	  },
+	]}
   brain = ml5.neuralNetwork(options);
   
-  // LOAD PRETRAINED MODEL
-  // Uncomment to train your own model!
-  // const modelInfo = {
-  //   model: 'model2/model.json',
-  //   metadata: 'model2/model_meta.json',
-  //   weights: 'model2/model.weights.bin',
-  // };
-  // brain.load(modelInfo, brainLoaded);
+   //LOAD PRETRAINED MODEL
+   //Uncomment to train your own model!
+  /* const modelInfo = {
+	model: 'yoga/yoga.json',
+	metadata: 'yoga/yoga_meta.json',
+	weights: 'yoga/yoga.weights.bin',
+   };
+  brain.load(modelInfo, brainLoaded); */
 
   // LOAD TRAINING DATA
   brain.loadData('train.json', dataReady);
@@ -85,9 +93,12 @@ function classifyPose() {
   }
 }
 
-function gotResult(error, results) {  
+function gotResult(error, results) { 
+  if (startLogging) {console.log(results);}
   if (results[0].confidence > 0.75) {
     poseLabel = results[0].label.toUpperCase();
+  } else {
+	poseLabel = '';
   }
   classifyPose();
 }
@@ -101,15 +112,9 @@ function dataReady() {
 
 function finished() {
   console.log('model trained');
-  brain.save('yoga');
+  //brain.save('yoga'); --UNCOMMENT WHEN YOU WANT TO SAVE THE MODEL
   classifyPose();
 }
-
-
-
-
-
-
 
 function gotPoses(poses) {
   // console.log(poses); 
@@ -129,7 +134,6 @@ function gotPoses(poses) {
     }
   }
 }
-
 
 function modelLoaded() {
   console.log('poseNet ready');
@@ -162,7 +166,7 @@ function draw() {
 
   fill(255, 0, 255);
   noStroke();
-  textSize(80);
+  textSize(75);
   textAlign(CENTER, CENTER);
   text(poseLabel, width / 2, height / 2);
 }
