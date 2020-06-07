@@ -21,26 +21,6 @@ let poseLabel = "";
 let state = 'waiting';
 let targetLabel;
 
-function keyPressed() {
-  if (key == 't') {
-    brain.normalizeData();
-    brain.train({epochs: 50}, finished); 
-  } else if (key == 's') {
-    brain.saveData();
-  // } else {
-  //   targetLabel = key;
-  //   console.log(targetLabel);
-  //   setTimeout(function() {
-  //     console.log('collecting');
-  //     state = 'collecting';
-  //     setTimeout(function() {
-  //       console.log('not collecting');
-  //       state = 'waiting';
-  //     }, 2000);
-  //   }, 1000);
-  }
-}
-
 function setup() {
   createCanvas(640, 480);
   video = createCapture(VIDEO);
@@ -52,7 +32,23 @@ function setup() {
     inputs: 34,
     outputs: 4,
     task: 'classification',
-    debug: true
+    debug: true,
+	layers: [
+	{
+      type: 'dense',
+      units: 16,
+      activation: 'relu'
+    },
+    {
+      type: 'dense',
+      units: 16,
+      activation: 'sigmoid'
+    },
+    {
+      type: 'dense',
+      activation: 'sigmoid'
+    }],
+	learningRate: 0.2,
   }
   brain = ml5.neuralNetwork(options);
   
