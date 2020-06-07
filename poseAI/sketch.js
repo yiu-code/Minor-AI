@@ -72,7 +72,7 @@ function setup() {
   // LOAD TRAINING DATA
   brain.loadData('train.json', dataReady);
 }
-
+ 
 function brainLoaded() {
   console.log('pose classification ready!');
   classifyPose();
@@ -95,7 +95,7 @@ function classifyPose() {
 
 function gotResult(error, results) { 
   if (startLogging) {console.log(results);}
-  if (results[0].confidence > 0.75) {
+  if (results[0].confidence > 0.33) {
     poseLabel = results[0].label.toUpperCase();
   } else {
 	poseLabel = '';
@@ -106,7 +106,7 @@ function gotResult(error, results) {
 function dataReady() {
   brain.normalizeData();
   brain.train({
-    epochs: 100
+    epochs: 70
   }, finished);
 }
 
