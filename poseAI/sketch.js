@@ -33,23 +33,7 @@ function setup() {
     inputs: 34,
     outputs: 4,
     task: 'classification',
-    debug: true,
-    layers:[
-      {
-        type: 'dense',
-        units: 64,
-        activation: 'relu',
-      },
-      {
-        type: 'dense',
-        units: 16,
-        activation: 'relu',
-      },
-      {
-        type: 'dense',
-        activation: 'softmax',
-      },
-    ] 
+    debug: true
   }
   brain = ml5.neuralNetwork(options);
   
@@ -63,7 +47,7 @@ function setup() {
   brain.load(modelInfo, brainLoaded); */
 
   // LOAD TRAINING DATA
-  brain.loadData('train.json', dataReady);
+  brain.loadData('PoseNet.json', dataReady);
 }
 
 function brainLoaded() {
@@ -88,13 +72,10 @@ function classifyPose() {
 
 function gotResult(error, results) { 
   if (startLogging) {console.log(results);}
-  if (results[0].confidence > 0.75) {
+  if (results[0].confidence > 0.80) {
     poseLabel = results[0].label.toUpperCase();
   } else {
 	poseLabel = '';
-  }
-  else{
-    poseLabel = ""
   }
   classifyPose();
 }
@@ -102,7 +83,7 @@ function gotResult(error, results) {
 function dataReady() {
   brain.normalizeData();
   brain.train({
-    epochs: 50,
+    epochs: 100,
     batchsize: 24
   }, finished);
 }
