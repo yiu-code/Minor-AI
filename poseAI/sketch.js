@@ -40,9 +40,7 @@ function setup() {
     ]
   }
   brain = ml5.neuralNetwork(options);
-  // LOAD TRAINING DATA
-  brain.loadData('train.json', dataReady);
-
+  
   //LOAD PRETRAINED MODEL
   //Uncomment to train your own model!
   /* const modelInfo = {
@@ -51,8 +49,6 @@ function setup() {
 	weights: 'yoga/yoga.weights.bin',
    };
   brain.load(modelInfo, classifyPose()); */
-}
-
   // LOAD TRAINING DATA
   brain.loadData('PoseNet.json', dataReady);
 }
