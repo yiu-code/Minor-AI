@@ -53,8 +53,12 @@ function setup() {
   brain.load(modelInfo, classifyPose()); */
 }
 
-  // LOAD TRAINING DATA
-  brain.loadData('PoseNet.json', dataReady);
+function dataReady() {
+  brain.normalizeData();
+  brain.train({
+    epochs: 50,
+    batchsize: 24
+  }, classifyPose);
 }
 
 function keyPressed() {
@@ -83,27 +87,16 @@ function classifyPose() {
   }
 }
 
-function gotResult(error, results) { 
-  if (startLogging) {console.log(results);}
-  if (results[0].confidence > 0.80) {
-    poseLabel = results[0].label.toUpperCase();
+function gotResult(_, results) {
+  if (startLogging) {
+    console.log(results);
+  }
+  if (results[0].confidence > 0.33) {
+    poseLabel = results[0].label;
   } else {
     poseLabel = '';
   }
-  classifyPose();
-}
 
-function dataReady() {
-  brain.normalizeData();
-  brain.train({
-    epochs: 100,
-    batchsize: 24
-  }, finished);
-}
-
-function finished() {
-  console.log('model trained');
-  //brain.save('yoga'); --UNCOMMENT WHEN YOU WANT TO SAVE THE MODEL
   classifyPose();
 }
 
