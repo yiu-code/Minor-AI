@@ -10,3 +10,11 @@ a {
 canvas {
   display: block;
 }
+
+.button-row{
+  padding-top: 50px;
+}
+
+.videocontainer-container {
+  padding-left: 20%;
+}
