@@ -87,21 +87,17 @@ function gotResult(_, results) {
   else {
 		poseLabel = currentButton ? 'No ' + currentButton : 'No Pose Selected'
   }
-  // if (results[0].confidence > 0.70) {
-  //   poseLabel = results[0].label;
 
-  // } else {
-  //   poseLabel = '';
-  // }
   classifyPose();
 }
 
 function createButtons() {
-
+  callJson();
   buttonA = document.getElementById('TreePose');
   buttonA.addEventListener('click', function(e){
-  console.log("Treepose, activate!");
-	currentButton = buttonA.id;
+    console.log(poseNames);
+    console.log("Treepose, activate!");
+	  currentButton = buttonA.id;
   });
 
   buttonB = document.getElementById('WarriorPoseI');
@@ -124,6 +120,12 @@ function createButtons() {
 		currentButton = buttonD.id;
   });
 
+}
+function callJson() {
+  $.getJSON('model/model_meta.json', function (data) {
+    poseNames = data.outputs[0].uniqueValues;
+    return poseNames;
+  });
 }
 
 function finished() {
