@@ -7,6 +7,7 @@ let brain;
 let poseLabel = "";
 
 let targetLabel;
+let currentButton = null;
 
 let startLogging = false;
 
@@ -79,6 +80,13 @@ function gotResult(_, results) {
   if (startLogging) {
     console.log(results);
   }
+ 
+  if (results[0].label == currentButton && results[0].confidence > 0.70){
+	poseLabel = results[0].label;
+  }
+  else {
+		poseLabel = currentButton ? 'No ' + currentButton : 'No Pose Selected'
+  }
   // if (results[0].confidence > 0.70) {
   //   poseLabel = results[0].label;
 
@@ -87,34 +95,33 @@ function gotResult(_, results) {
   // }
   classifyPose();
 }
+
 function createButtons() {
-  buttonA = document.getElementById('treePose');
+
+  buttonA = document.getElementById('TreePose');
   buttonA.addEventListener('click', function(e){
-    $.getJSON('model/model_meta.json', function (data) {
-      console.log(data.outputs[0].uniqueValues);
-    });
-    console.log("Treepose, activate!");
-    if (results[0].label == "TreePose" && results[0].confidence > 0.70){
-      poseLabel = results[0].label;
-    }
-    else{
-      poseLabel = '';
-    }
+  console.log("Treepose, activate!");
+	currentButton = buttonA.id;
   });
 
-  buttonB = document.getElementById('warriorPoseI');
+  buttonB = document.getElementById('WarriorPoseI');
   buttonB.addEventListener('click', function(e){
     console.log("WarriorPoseI, activate!");
+		currentButton = buttonB.id;
+
   });
 
-  buttonC = document.getElementById('warriorPoseII');
+  buttonC = document.getElementById('WarriorPoseII');
   buttonC.addEventListener('click', function(e){
     console.log("WarriorPoseII, activate!");
+		currentButton = buttonC.id;
+
   });
 
-  buttonD = document.getElementById('warriorPoseIII');
+  buttonD = document.getElementById('WarriorPoseIII');
   buttonD.addEventListener('click', function(e){
     console.log("WarriorPoseIII, activate!");
+		currentButton = buttonD.id;
   });
 
 }
