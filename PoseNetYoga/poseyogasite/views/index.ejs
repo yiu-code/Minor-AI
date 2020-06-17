@@ -6,6 +6,7 @@
  -->
   <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
 
+  <script src="./javascripts/sketch.js"></script>
 
   <!-- BOOTSTRAP -->
 
@@ -32,23 +33,14 @@
         <div id="videoContainer" class="videocontainer-container"></div>
       </div>
     </div>
-
     <div class="button-row">
-      <div class="col col-lg-3">
-        <button id="treePose" class="btn btn-info">Only Treepose please!</button>
-      </div>
-      <div class="col col-lg-3">
-        <button id="warriorPoseI" class="btn btn-info">Only WarriorPoseI please!</button>      
-      </div>
-      <div class="col col-lg-3">
-        <button id="warriorPoseII" class="btn btn-info">Only WarriorPoseII please!</button>   
-      </div>
-      <div class="col col-lg-3">
-        <button id="warriorPoseIII" class="btn btn-info">Only WarriorPoseIII please!</button>
-      </div>
+      <% for (var i =0; i < listPoses.length;  i++ ) { %>
+        <div class="col col-lg-3">
+          <button id=<%= listPoses[i] %> class="btn btn-info">Only <%= listPoses[i] %> please!</button>
+        </div> 
+        <% } %>
     </div>
-  </div>
 
+  </div>
 </body>
-<script src="./javascripts/sketch.js"></script>
 </html>
