@@ -10,3 +10,12 @@ a {
 canvas {
   display: block;
 }
+
+.button-row{
+  padding-top: 50px;
+}
+
+#defaultCanvas0 {
+  display: flex;
+  margin: 0 auto;
+}

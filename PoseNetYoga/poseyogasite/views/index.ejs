@@ -5,12 +5,42 @@
   <!--   <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
  -->
   <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
+
+  <script src="./javascripts/sketch.js"></script>
+
+  <!-- BOOTSTRAP -->
+
+   <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+
+<!-- END BOOTSTRAP
+ -->
   <meta charset="utf-8">
 
 </head>
 
 <body>
-  <script src="./javascripts/sketch.js"></script>
 
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div id="videoContainer" class="videocontainer-container"></div>
+      </div>
+    </div>
+    <div class="button-row">
+      <% for (var i =0; i < listPoses.length;  i++ ) { %>
+        <div class="col col-lg-3">
+          <button id=<%= listPoses[i] %> class="btn btn-info">Only <%= listPoses[i] %> please!</button>
+        </div> 
+        <% } %>
+    </div>
 
-</body></html>
+  </div>
+</body>
+</html>

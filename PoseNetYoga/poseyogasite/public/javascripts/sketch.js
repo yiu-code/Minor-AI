@@ -6,55 +6,59 @@ let skeleton;
 let brain;
 let poseLabel = "";
 
-let state = 'waiting';
 let targetLabel;
+let currentButton = null;
 
 let startLogging = false;
 
-function keyPressed() {
-  if (key == 't') {
-	  setTimeout(function() {
-		startLogging = true;
-		setTimeout(function() {
-			startLogging = false}, 
-			3000)
-	  }, 5000)
-  }
-}
-
 function setup() {
-  createCanvas(640, 480);
+  canvas = createCanvas(640, 480);
+  canvas.parent('videoContainer');
   video = createCapture(VIDEO);
   video.hide();
-  poseNet = ml5.poseNet(video, modelLoaded);
+  poseNet = ml5.poseNet(video);
   poseNet.on('pose', gotPoses);
 
   let options = {
     inputs: 34,
     outputs: 4,
     task: 'classification',
-    debug: true,
-    architecture: 'ResNet50',
-    outputStride: 32
+    debug: true
   }
   brain = ml5.neuralNetwork(options);
+  // LOAD TRAINING DATA
+  // brain.loadData('../javascripts/PoseNetV2.json', dataReady);
+
   
    //LOAD PRETRAINED MODEL
    //Uncomment to train your own model!
-  /* const modelInfo = {
-	model: 'yoga/yoga.json',
-	metadata: 'yoga/yoga_meta.json',
-	weights: 'yoga/yoga.weights.bin',
+  const modelInfo = {
+	model: 'model/model.json',
+	metadata: 'model/model_meta.json',
+	weights: 'model/model.weights.bin',
    };
-  brain.load(modelInfo, brainLoaded); */
+  brain.load(modelInfo, classifyPose());
 
-  // LOAD TRAINING DATA
-  brain.loadData('./PoseNetV2.json', dataReady);
+  createButtons();
 }
 
-function brainLoaded() {
-  console.log('pose classification ready!');
-  classifyPose();
+function dataReady() {
+  brain.normalizeData();
+  brain.train({
+    epochs: 100,
+    batchsize: 24
+  }, classifyPose);
+}
+
+function keyPressed() {
+  if (key == 't') {
+    setTimeout(function () {
+      startLogging = true;
+      setTimeout(function () {
+        startLogging = false;
+      }, 3000)
+    }, 5000)
+  }
 }
 
 function classifyPose() {
@@ -72,51 +76,52 @@ function classifyPose() {
   }
 }
 
-function gotResult(error, results) { 
-  if (startLogging) {console.log(results);}
-  if (results[0].confidence > 0.70) {
-    poseLabel = results[0].label.toUpperCase();
-  } else {
-	poseLabel = '';
+function gotResult(_, results) {
+  if (startLogging) {
+    console.log(results);
   }
+ 
+  if (results[0].label == currentButton && results[0].confidence > 0.70){
+	poseLabel = results[0].label;
+  }
+  else {
+		poseLabel = currentButton ? 'No ' + currentButton : 'No Pose Selected'
+  }
+
   classifyPose();
 }
 
-function dataReady() {
-  brain.normalizeData();
-  brain.train({
-    epochs: 100,
-    batchsize: 24
-  }, finished);
+function createButtons() {
+  $.getJSON('model/model_meta.json', function (data) {
+    listPoses = data.outputs[0].uniqueValues;
+    for (i = 0; i < listPoses.length; i++){
+        createNewButton(listPoses[i])
+    };
+
+  }); // Calling upon all present poses in the JSON file
+
+}
+
+function createNewButton(elemId) {
+  button = document.getElementById(elemId);
+  button.addEventListener('click', function(e){
+    console.log(elemId+ ", activate!");
+    currentButton = elemId;
+  });
+
 }
 
 function finished() {
   console.log('model trained');
-  //brain.save('yoga'); --UNCOMMENT WHEN YOU WANT TO SAVE THE MODEL
+  brain.save(); //UNCOMMENT WHEN YOU WANT TO SAVE THE MODEL
   classifyPose();
 }
 
 function gotPoses(poses) {
-  // console.log(poses); 
   if (poses.length > 0) {
     pose = poses[0].pose;
     skeleton = poses[0].skeleton;
-    if (state == 'collecting') {
-      let inputs = [];
-      for (let i = 0; i < pose.keypoints.length; i++) {
-        let x = pose.keypoints[i].position.x;
-        let y = pose.keypoints[i].position.y;
-        inputs.push(x);
-        inputs.push(y);
-      }
-      let target = [targetLabel];
-      brain.addData(inputs, target);
-    }
   }
-}
-
-function modelLoaded() {
-  console.log('poseNet ready');
 }
 
 function draw() {
