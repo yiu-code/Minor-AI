@@ -33,28 +33,14 @@
         <div id="videoContainer" class="videocontainer-container"></div>
       </div>
     </div>
-    <div class="row">
-      <% for (var i =1; i < 4;  i++ ) { %>
-        <br/>  <%= listPoses %> 
+    <div class="button-row">
+      <% for (var i =0; i < listPoses.length;  i++ ) { %>
+        <div class="col col-lg-3">
+          <button id=<%= listPoses[i] %> class="btn btn-info">Only <%= listPoses[i] %> please!</button>
+        </div> 
         <% } %>
     </div>
 
-    <div class="button-row">
-      
-
-      <div class="col col-lg-3">
-        <button id="TreePose" class="btn btn-info">Only Treepose please!</button>
-      </div>
-      <div class="col col-lg-3">
-        <button id="WarriorPoseI" class="btn btn-info">Only WarriorPoseI please!</button>      
-      </div>
-      <div class="col col-lg-3">
-        <button id="WarriorPoseII" class="btn btn-info">Only WarriorPoseII please!</button>   
-      </div>
-      <div class="col col-lg-3">
-        <button id="WarriorPoseIII" class="btn btn-info">Only WarriorPoseIII please!</button>
-      </div>
-    </div>
   </div>
 </body>
 </html>
