@@ -5,7 +5,7 @@ let skeleton;
 
 let brain;
 let poseLabel = "";
-let poseConfidence = "";
+let poseconfidence = "";
 
 let targetLabel;
 let currentButton = null;
@@ -84,11 +84,11 @@ function gotResult(_, results) {
   console.log(results)
   if (results[0].label == currentButton && results[0].confidence > 0.70){
   poseLabel = results[0].label;
-  poseConfidence = results[0].confidence
+  poseconfidence = results[0].confidence
   }
   else {
     poseLabel = currentButton ? 'No ' + currentButton : 'No Pose Selected'
-    poseConfidence = '-'
+    poseconfidence = '-'
   }
 
   classifyPose();
@@ -115,6 +115,7 @@ function createNewButton(elemId) {
 }
 
 function finished() {
+  console.log('model trained');
   brain.save(); //UNCOMMENT WHEN YOU WANT TO SAVE THE MODEL
   classifyPose();
 }
@@ -156,5 +157,5 @@ function draw() {
   textSize(50);
   textAlign(LEFT, CENTER);
   text(poseLabel, 10, 50);
-  text(poseConfidence, 10, 100)
+  text(poseconfidence, 10, 100)
 }
