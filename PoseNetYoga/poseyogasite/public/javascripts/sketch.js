@@ -81,7 +81,6 @@ function gotResult(_, results) {
   if (startLogging) {
     console.log(results);
   }
-  console.log(results)
   if (results[0].label == currentButton && results[0].confidence > 0.70){
   poseLabel = results[0].label;
   poseConfidence = results[0].confidence
