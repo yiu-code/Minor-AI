@@ -7,3 +7,4 @@
 
 Images/**/*.json
 CustomDetector/COCO/annotations/*.json
+OpenPose/pose/coco/
