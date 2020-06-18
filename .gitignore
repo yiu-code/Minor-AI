@@ -1,7 +1,9 @@
 *.jpg
+*.txt
+
 .vscode/
 .ipynb_checkpoints/
 .__pycache__/
-/COCO
+
 Images/**/*.json
 CustomDetector/COCO/annotations/*.json
