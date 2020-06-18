@@ -5,6 +5,7 @@ let skeleton;
 
 let brain;
 let poseLabel = "";
+let poseconfidence = "";
 
 let targetLabel;
 let currentButton = null;
@@ -80,12 +81,14 @@ function gotResult(_, results) {
   if (startLogging) {
     console.log(results);
   }
- 
+  console.log(results)
   if (results[0].label == currentButton && results[0].confidence > 0.70){
-	poseLabel = results[0].label;
+  poseLabel = results[0].label;
+  poseconfidence = results[0].confidence
   }
   else {
-		poseLabel = currentButton ? 'No ' + currentButton : 'No Pose Selected'
+    poseLabel = currentButton ? 'No ' + currentButton : 'No Pose Selected'
+    poseconfidence = '-'
   }
 
   classifyPose();
@@ -152,6 +155,7 @@ function draw() {
   fill(255, 0, 255);
   noStroke();
   textSize(50);
-  textAlign(CENTER, CENTER);
-  text(poseLabel, width / 2, height / 2);
+  textAlign(LEFT, CENTER);
+  text(poseLabel, 10, 50);
+  text(poseconfidence, 10, 100)
 }
