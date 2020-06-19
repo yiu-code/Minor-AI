@@ -1,21 +1,63 @@
-body {
-  padding: 50px;
+html, body {
+  padding-top: 5px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 100%;
 }
 
-a {
-  color: #00B7FF;
+h2 {
+  text-align: center;
+  padding-bottom: 10px;
 }
 
 canvas {
   display: block;
 }
 
-.button-row{
-  padding-top: 50px;
-}
-
 #defaultCanvas0 {
   display: flex;
   margin: 0 auto;
 }
+
+button {
+  height: 50px;
+}
+
+.button-row {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.bottom-class {
+  display:flex;
+  justify-content: center;
+}
+
+.makes-buttons {
+  justify-content: center;
+  display: flex;
+}
+
+.card {
+  padding: 25px;
+  text-align: center;
+}
+
+.card-img {
+  width: 75%;
+  object-fit: cover;
+}
+
+#sticky-footer {
+  width: 100%;
+  position: fixed;
+  text-align: center;
+  bottom: 0;
+  padding-bottom: 2%;
+  background-color: rgba(196, 199, 201, 0.301);
+}
+
+small {
+  padding-top: 10px;
+}
+
+
