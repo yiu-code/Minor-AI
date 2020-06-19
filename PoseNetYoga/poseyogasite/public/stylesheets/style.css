@@ -46,6 +46,7 @@ button {
   width: 75%;
   object-fit: cover;
 }
+
 #sticky-footer {
   width: 100%;
   position: fixed;
