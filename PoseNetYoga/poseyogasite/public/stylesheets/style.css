@@ -5,8 +5,8 @@ html, body {
 }
 
 h2 {
-text-align: center;
-padding-bottom: 10px;
+  text-align: center;
+  padding-bottom: 10px;
 }
 
 canvas {
@@ -37,6 +37,15 @@ button {
   display: flex;
 }
 
+.card {
+  padding: 25px;
+  text-align: center;
+}
+
+.card-img {
+  width: 75%;
+  object-fit: cover;
+}
 #sticky-footer {
   width: 100%;
   position: fixed;
@@ -46,16 +55,8 @@ button {
   background-color: rgba(196, 199, 201, 0.301);
 }
 
-.card {
-  padding: 25px;
-  text-align: center;
-}
-
 small {
   padding-top: 10px;
 }
 
-.card-img {
-  width: 75%;
-  object-fit: cover;
-}
+
