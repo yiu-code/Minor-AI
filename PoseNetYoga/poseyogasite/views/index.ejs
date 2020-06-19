@@ -19,8 +19,7 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
 
-<!-- END BOOTSTRAP
- -->
+<!-- END BOOTSTRAP -->
   <meta charset="utf-8">
 
 </head>
@@ -29,18 +28,44 @@
 
   <div class="container">
     <div class="row">
+      <h2>Yo, ga posen!</h2>
+    </div>
+    <div class="row">
       <div class="col">
         <div id="videoContainer" class="videocontainer-container"></div>
       </div>
     </div>
     <div class="button-row">
       <% for (var i =0; i < listPoses.length;  i++ ) { %>
-        <div class="col col-lg-3">
-          <button id=<%= listPoses[i] %> class="btn btn-info">Only <%= listPoses[i] %> please!</button>
+        <div class="col-button col-lg-3">
+          <div class="makes-buttons">
+            <button id=<%= listPoses[i] %> class="btn btn-info">Only <%= listPoses[i] %> please!</button>
+          </div>
         </div> 
         <% } %>
     </div>
+    <div class="card-row">
+      <% for (var i =0; i < listPoses.length;  i++ ) { %>
+        <div class="card col-lg-3">
+          <div class="card-body ">
+            <% if (listPoses[i] == "WarriorPoseI") { %>
+              <img src="./images/63.jpg" class="card-img" alt="...">
+            <% } %>
+            <% if (listPoses[i] == "WarriorPoseII") { %>
+              <img src="./images/1_95.jpg" class="card-img" alt="...">
+            <% } %>
+            <% if (listPoses[i] == "WarriorPoseIII") { %>
+              <img src="./images/68.jpg" class="card-img" alt="...">
+            <% } %>
+            <% if (listPoses[i] == "TreePose") { %>
+              <img src="./images/5.jpg" class="card-img" alt="...">
+            <% } %>
+          </div>
+      </div>
+      <% } %>
+    </div>
 
   </div>
+  <%- include("partials/footer"); -%>
 </body>
 </html>
