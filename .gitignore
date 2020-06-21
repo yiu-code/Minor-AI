@@ -1,5 +1,6 @@
 *.jpg
 *.txt
+*.log
 
 .vscode/
 .ipynb_checkpoints/
