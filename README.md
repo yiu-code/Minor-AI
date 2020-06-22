@@ -8,6 +8,7 @@ Npm 6.14.5
 
 Pacakges for Custom detector and OpenPose implementation:
 (install these via command line with pip install or conda install)
+- jupyter or jupyter lab
 - cython
 - tensorflow 2.1.0
 - keras 2.3
@@ -17,6 +18,7 @@ Pacakges for Custom detector and OpenPose implementation:
 - scikit-learn 
 - opencv-python
 - imgaug
+
 
 Packages for PoseNet implementation:
 - run the command npm install in the poseyogasite directory
